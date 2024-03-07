@@ -13,6 +13,8 @@ import Home from './components/Home';
 import About from './components/About';
 import Header from './components/Header';
 import NavigationBar from './components/NavigationBar';
+import QuotesHomepage from './components/QuotesHomepage';
+
 
 
 const App = () => {
@@ -21,6 +23,7 @@ const App = () => {
       <div>
         <Header/>
         <NavigationBar/>
+        <QuotesHomepage/>
         <nav>
           <ul>
             <li>
@@ -35,7 +38,7 @@ const App = () => {
             renders the first one that matches the current URL.
             Furthermore, notice how the content above always renders? On each page? */}
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<QuotesHomepage/>} />
           <Route path="/about" element={<About />} />
         </Routes>
       </div>
