@@ -12,12 +12,15 @@ import {
 import Home from './components/Home';
 import About from './components/About';
 import Header from './components/Header';
+import NavigationBar from './components/NavigationBar';
+
 
 const App = () => {
   return (
     <Router>
       <div>
         <Header/>
+        <NavigationBar/>
         <nav>
           <ul>
             <li>
