@@ -14,6 +14,8 @@ import About from './components/About';
 import Header from './components/Header';
 import NavigationBar from './components/NavigationBar';
 import QuotesHomepage from './components/QuotesHomepage';
+import Footer from './components/Footer';
+
 
 
 
@@ -24,6 +26,9 @@ const App = () => {
         <Header/>
         <NavigationBar/>
         <QuotesHomepage/>
+        <Footer/>
+
+      
         <nav>
           <ul>
             <li>
