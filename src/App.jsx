@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,13 +9,15 @@ import {
 /**
  * Importing other components
  */
-import Home from './components/Home'
-import About from './components/About'
+import Home from './components/Home';
+import About from './components/About';
+import Header from './components/Header';
 
 const App = () => {
   return (
     <Router>
       <div>
+        <Header/>
         <nav>
           <ul>
             <li>
