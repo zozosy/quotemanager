@@ -1,32 +1,48 @@
-// QuotesHomepage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-// Declaring the QuotesHomepage functional component
-const QuotesHomepage = () => {
-  // Array of quote objects, each containing id, quote, author, and category properties
-  const quotes = [
-    { id: 1, quote: "Quote 1", author: "Author 1", category: "Category 1" },
-    { id: 2, quote: "Quote 2", author: "Author 2", category: "Category 2" },
-    { id: 3, quote: "Quote 3", author: "Author 3", category: "Category 3" },
-  ];
+const QuotesHome = () => {
+  const generateRandomQuote = { 
+    quote:"Friendship is born at that moment when one person says to another, 'What! You too? I thought I was the only one.",
+    author: "C.S. Lewis"
+  };
 
-  // Rendering JSX to display the list of quotes
   return (
-    // Wrapper <div> with class name 'quotes-homepage'
-    <div className="quotes-homepage">
-      {/* Mapping over each quote object in the quotes array */}
-      {quotes.map(quote => (
-        // Each quote object is wrapped in a <div> with a unique key
-        <div key={quote.id}>
-          {/* Displaying the quote text */}
-          <p>{quote.quote}</p>
-          {/* Displaying the author and category */}
-          <p>- {quote.author}, {quote.category}</p>
-        </div>
-      ))}
+    <div>
+      <h3>Daily Inspiration</h3>
+      <div>
+        <blockquote>{generateRandomQuote.quote}</blockquote>
+        <p>- {generateRandomQuote.author}</p>
+      </div>
+      <h3>DiscovUncover Subjects</h3>
+      <ul>
+        <li>
+          <Link to="/topics/wisdom">Wisdom</Link>
+        </li>
+        <li>
+          <Link to="/topics/empowerment">Empowerment</Link>
+        </li>
+        <li>
+          <Link to="/topics/romance">Romance</Link>
+        </li>
+        <li>
+          <Link to="/topics/companionship">Companionship</Link>
+        </li>
+        <li>
+          <Link to="/topics/humor">Humor</Link>
+        </li>
+        <li>
+          <Link to="/topics/spiritual">Spiritual</Link>
+        </li>
+        <li>
+          <Link to="/topics/multilingual">Multilingual</Link>
+        </li>
+        <li>
+          <Link to="/topics/miscellaneous">Miscellaneous</Link>
+        </li>
+      </ul>
     </div>
   );
-};
+}
 
-// Exporting the QuotesHomepage component as the default export
-export default QuotesHomepage;
+export default QuotesHome;
