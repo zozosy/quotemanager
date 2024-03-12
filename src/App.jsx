@@ -1,45 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link
 } from 'react-router-dom'
-
-/**
- * Importing other components
- */
 import Home from './components/Home';
 import About from './components/About';
 import Header from './components/Header';
-//import NavigationBar from './components/NavigationBar';
 import QuotesHomepage from './components/QuotesHomepage';
 import Footer from './components/Footer';
 import QuoteForm from './components/QuoteForm';
-import './App.css'; // Import the CSS file
+import './App.css'; 
 import Topics from './components/Topics';
 
-
-
-
-
-
-
-
 const App = () => {
+  const [quotes, setQuotes] = useState([]); 
+
+  const addNewQuote = (newQuote) => {
+    setQuotes([...quotes, newQuote]);
+    console.log('Quote added:', newQuote);
+  };
+
+  const onDeleteQuote = (quoteToDelete) => {
+    console.log('Deleting quote:' , quoteToDelete);
+  };
+
+  const onUpdateQuote =(quoteToUpdate) => {
+    console.log('Updated Quote:', quoteToUpdate)
+  };
   
   return (
     <Router>
       <div>
         <Header/>
-        {/* <NavigationBar/>
-        <QuotesHomepage/>
-        <Footer/>
-
-        <QuoteForm/> */}
-
-
-      
         <nav>
           <ul>
             <li>
@@ -57,22 +51,20 @@ const App = () => {
           <Home/>
         </main>
 
-      
         <Routes>
           <Route path="/home" element={<QuotesHomepage/>} />
-          <Route path="/quote-form" element={<QuoteForm />} />
+          <Route path="/quote-form" element={<QuoteForm 
+                                                  addNewQuote={addNewQuote} 
+                                                />} />
           <Route path="/about" element={<About />} />
-          <Route path="/topics/:topics" element={<Topics />} />
+          <Route  path="/topics/:topics" 
+                  element={<Topics onDeleteQuote={onDeleteQuote} onUpdateQuote={onUpdateQuote} />} 
+/>
 
-          
         </Routes>
      {/* <Footer/> */}
-
       </div>
     </Router>
-    
   );
-
 }
-
 export default App

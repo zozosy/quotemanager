@@ -1,39 +1,20 @@
 import React, { useState } from 'react';
 
-const QuoteForm = ({ addNewQuote, updateExistingQuote, deleteQuote }) => {
+const QuoteForm = ({ addNewQuote}) => {
   const [quoteText, setQuoteText] = useState('');
   const [quoteAuthor, setQuoteAuthor] = useState('');
   const [quoteCategory, setQuoteCategory] = useState('');
 
-
-
-  
   const handleAddQuote = () => {
     if (quoteText && quoteAuthor && quoteCategory) {
       addNewQuote({ text: quoteText, author: quoteAuthor, category: quoteCategory });
       clearInputs();
+      console.log('Quote added:', { text: quoteText, author: quoteAuthor, category: quoteCategory });
     } else {
       alert('Please fill in all fields.');
-    }
+    
   };
-
-  const handleUpdateQuote = () => {
-    if (quoteText && quoteAuthor && quoteCategory) {
-      updateExistingQuote({ text: quoteText, author: quoteAuthor, category: quoteCategory });
-      clearInputs();
-    } else {
-      alert('Please fill in all fields.');
-    }
-  };
-
-  const handleDeleteQuote = () => {
-    if (quoteText && quoteAuthor && quoteCategory) {
-      deleteQuote({ text: quoteText, author: quoteAuthor, category: quoteCategory });
-      clearInputs();
-    } else {
-      alert('Please fill in all fields.');
-    }
-  };
+  }
 
   const clearInputs = () => {
     setQuoteText('');
@@ -63,8 +44,6 @@ const QuoteForm = ({ addNewQuote, updateExistingQuote, deleteQuote }) => {
         onChange={(e) => setQuoteCategory(e.target.value)}
       />
       <button onClick={handleAddQuote}>Add Quote</button>
-      <button onClick={handleUpdateQuote}>Update Quote</button>
-      <button onClick={handleDeleteQuote}>Delete Quote</button>
     </div>
   );
 };
