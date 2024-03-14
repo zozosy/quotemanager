@@ -11,12 +11,14 @@ const QuoteForm = ({ addNewQuote }) => { // Defining a functional component name
       addNewQuote(newQuoteData); // Calling the addNewQuote function passed as prop and passing the new quote object
       clearInputs(); // Calling the clearInputs function to clear the input fields
       console.log('Quote added:', newQuoteData); // Logging the newly added quote
+      const existingQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+    localStorage.setItem('quotes', JSON.stringify([...existingQuotes, newQuoteData]));
     } else {
       alert('Please fill in all fields.'); 
     }
   };
 
- 
+  
 
   const clearInputs = () => { // Defining a function to clear input fields
     setQuoteText(''); // Clearing quoteText
