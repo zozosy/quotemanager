@@ -12,6 +12,9 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
   const [quoteAuthor, setQuoteAuthor] = useState(''); 
   const [quoteCategory, setQuoteCategory] = useState('');
 
+  
+  
+
   useEffect(() => {
     try {
       // effect hook to update the quotes when the topic changes
@@ -67,26 +70,48 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
     return <div>Error: {error.message}</div>;
   }
 
+  // Define a function named handleLoad that takes no parameters
+const handleLoad = () => {
+  try {
+      // Attempt to retrieve data from localStorage under the key 'quotes' and store it in storedQuotes variable
+      const storedQuotes = localStorage.getItem('quotes');
+      // Check if there is any data stored in storedQuotes
+      if (storedQuotes) {
+          // Parse the stored data from JSON format into a JavaScript object and store it in parsedQuotes variable
+          const parsedQuotes = JSON.parse(storedQuotes);
+          // Set the state variable quotes to the parsedQuotes, ensuring it's an array
+          setQuotes(parsedQuotes);
+      } else {
+          // Log an error message to the console if no data is found in localStorage
+          console.error('No quotes found in localStorage');
+      }
+  } catch (error) {
+      console.error('Error loading quotes from localStorage:', error);
+  }
+};
+
+
   return (
     <div>
       <h3>List of Quotes - {topics}</h3>
+      <button onClick={handleLoad}>Load</button>
       {/* Map over the filtered quotes and display each quote */}
       {quotes.map((quote, index) => (
-        <blockquote key={index}>
-          <p>
-            <strong>Quote:</strong> <q>{quote.quote}</q>
-          </p>
-          <p>
-            <strong>Author:</strong> - {quote.author}
-          </p>
-          <p>
-            <strong>Category:</strong> - {quote.category}
-          </p>
-          <button onClick={() => handleDelete(quote)}>Del</button>
-          <button onClick={() => selectQuoteToUpdate(quote)}>Update</button>
-          <br />
-        </blockquote>
-      ))}
+  <blockquote key={index}>
+    <p>
+      <strong>Quote:</strong> <q>{quote.quote}</q>
+    </p>
+    <p>
+      <strong>Author:</strong> - {quote.author}
+    </p>
+    <p>
+      <strong>Category:</strong> - {quote.category}
+    </p>
+    <button onClick={() => handleDelete(quote)}>Del</button>
+    <button onClick={() => selectQuoteToUpdate(quote)}>Update</button>
+    <br />
+  </blockquote>
+))}
      
       {quoteToUpdate && (
         <div>

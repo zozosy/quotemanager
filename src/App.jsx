@@ -27,7 +27,7 @@ const App = () => {
   };
 
   const onUpdateQuote =(quoteToUpdate) => {
-    console.log('Updated Quote:', quoteToUpdate)
+    console.log('Updated Quote:', quoteToUpdate);
   };
   
   return (
@@ -58,7 +58,7 @@ const App = () => {
                                                 />} />
           <Route path="/about" element={<About />} />
           <Route  path="/topics/:topics" 
-                  element={<Topics onDeleteQuote={onDeleteQuote} onUpdateQuote={onUpdateQuote} />} 
+                 element={<Topics onDeleteQuote={onDeleteQuote} onUpdateQuote={onUpdateQuote} />} 
 />
 
         </Routes>
