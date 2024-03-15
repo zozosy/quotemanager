@@ -8,18 +8,17 @@ const QuoteForm = ({ addNewQuote }) => { // Defining a functional component name
  
   
 
-  const handleAddQuote = () => { // Defining a function handleAddQuote
-    if (quoteText && quoteAuthor && quoteCategory) { // Checking if all fields are filled
-      const newQuoteData = { quote: quoteText, author: quoteAuthor, category: quoteCategory }; // Creating a new quote object
-      addNewQuote(newQuoteData); // Calling the addNewQuote function passed as prop and passing the new quote object
-      clearInputs(); // Calling the clearInputs function to clear the input fields
-      console.log('Quote added:', newQuoteData); // Logging the newly added quote
-      const existingQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
-    localStorage.setItem('quotes', JSON.stringify([...existingQuotes, newQuoteData]));
-    } else {
-      alert('Please fill in all fields.'); 
-    }
-  };
+  // Function to add a new quote
+const handleAddQuote = () => {
+  if (quoteText && quoteAuthor && quoteCategory) {
+    const newQuoteData = { quote: quoteText, author: quoteAuthor, category: quoteCategory };
+    addNewQuote(newQuoteData);
+    clearInputs();
+    console.log('Quote added:', newQuoteData);
+  } else {
+    alert('Please fill in all fields.');
+  }
+};
 
   
 

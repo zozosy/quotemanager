@@ -12,25 +12,21 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
   const [quoteAuthor, setQuoteAuthor] = useState(''); 
   const [quoteCategory, setQuoteCategory] = useState('');
 
-  
-  
-
   useEffect(() => {
     try {
-      // effect hook to update the quotes when the topic changes
       const filteredQuotes = quotesData.topics.filter(
         (quote) => quote.category === topics
       );
-      setQuotes(filteredQuotes); // Set the filtered quotes to the state
+      setQuotes(filteredQuotes);
       setLoading(false);
     } catch (error) {
       setError(error);
     }
-  }, [topics]); // Re-run the effect when the topic changes
+  }, [topics]);
 
   const handleDelete = (quoteToDelete) => {
     const updatedQuotes = quotes.filter(quote =>
-      !(quote.text === quoteToDelete.text && quote.author === quoteToDelete.author && quote.category === quoteToDelete.category)
+      !(quote.quote === quoteToDelete.quote && quote.author === quoteToDelete.author && quote.category === quoteToDelete.category)
     );
     setQuotes(updatedQuotes);
     console.log('Quote deleted:', quoteToDelete);
@@ -39,7 +35,7 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
 
   const handleUpdate = () => {
     if (quoteText && quoteAuthor && quoteCategory) {
-      const updatedQuote = { ...quoteToUpdate, text: quoteText, author: quoteAuthor, category: quoteCategory };
+      const updatedQuote = { ...quoteToUpdate, quote: quoteText, author: quoteAuthor, category: quoteCategory };
       onUpdateQuote(updatedQuote);
       clearInputs();
       console.log('Quote updated:', updatedQuote);
@@ -50,7 +46,7 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
 
   const selectQuoteToUpdate = (quote) => {
     setQuoteToUpdate(quote);
-    setQuoteText(quote.text);
+    setQuoteText(quote.quote);
     setQuoteAuthor(quote.author);
     setQuoteCategory(quote.category);
   };
@@ -62,15 +58,7 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
     setQuoteCategory('');
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  // Define a function named handleLoad that takes no parameters
+   // Define a function named handleLoad that takes no parameters
 const handleLoad = () => {
   try {
       // Attempt to retrieve data from localStorage under the key 'quotes' and store it in storedQuotes variable
@@ -90,28 +78,41 @@ const handleLoad = () => {
   }
 };
 
+  const handleSaveToLocal = () => {
+    localStorage.setItem('quotes', JSON.stringify(quotes));
+    console.log('Quotes saved to local storage');
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
       <h3>List of Quotes - {topics}</h3>
       <button onClick={handleLoad}>Load</button>
-      {/* Map over the filtered quotes and display each quote */}
+      <button onClick={handleSaveToLocal}>Save to Local Storage</button>
+
       {quotes.map((quote, index) => (
-  <blockquote key={index}>
-    <p>
-      <strong>Quote:</strong> <q>{quote.quote}</q>
-    </p>
-    <p>
-      <strong>Author:</strong> - {quote.author}
-    </p>
-    <p>
-      <strong>Category:</strong> - {quote.category}
-    </p>
-    <button onClick={() => handleDelete(quote)}>Del</button>
-    <button onClick={() => selectQuoteToUpdate(quote)}>Update</button>
-    <br />
-  </blockquote>
-))}
+        <blockquote key={index}>
+          <p>
+            <strong>Quote:</strong> <q>{quote.quote}</q>
+          </p>
+          <p>
+            <strong>Author:</strong> - {quote.author}
+          </p>
+          <p>
+            <strong>Category:</strong> - {quote.category}
+          </p>
+          <button onClick={() => handleDelete(quote)}>Del</button>
+          <button onClick={() => selectQuoteToUpdate(quote)}>Update</button>
+          <br />
+        </blockquote>
+      ))}
      
       {quoteToUpdate && (
         <div>
