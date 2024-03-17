@@ -8,9 +8,11 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quoteToUpdate, setQuoteToUpdate] = useState(null); 
-  const [quoteText, setQuoteText] = useState(''); 
-  const [quoteAuthor, setQuoteAuthor] = useState(''); 
-  const [quoteCategory, setQuoteCategory] = useState('');
+  const [formData, setFormData] = useState({
+    quoteText: '',
+    quoteAuthor: '',
+    quoteCategory: ''
+  });
 
   useEffect(() => {
     try {
@@ -118,23 +120,25 @@ const handleLoad = () => {
         <div>
           <h3>Update Quote</h3>
           <input
-            type="text"
-            value={quoteText}
-            onChange={(e) => setQuoteText(e.target.value)}
-            placeholder="Enter quote text"
-          />
-          <input
-            type="text"
-            value={quoteAuthor}
-            onChange={(e) => setQuoteAuthor(e.target.value)}
-            placeholder="Enter author"
-          />
-          <input
-            type="text"
-            value={quoteCategory}
-            onChange={(e) => setQuoteCategory(e.target.value)}
-            placeholder="Enter category"
-          />
+  type="text"
+  value={formData.quoteText}
+  onChange={(e) => setFormData({...formData, quoteText: e.target.value})}
+  placeholder="Enter quote text"
+/>
+
+<input
+  type="text"
+  value={formData.quoteAuthor}
+  onChange={(e) => setFormData({...formData, quoteAuthor: e.target.value})}
+  placeholder="Enter author"
+/>
+
+<input
+  type="text"
+  value={formData.quoteCategory}
+  onChange={(e) => setFormData({...formData, quoteCategory: e.target.value})}
+  placeholder="Enter category"
+/>
           <button onClick={handleUpdate}>Update Quote</button>
         </div>
       )}
