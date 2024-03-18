@@ -1,23 +1,50 @@
-/**
- * Below is an example of a simple reducer, just added it to get the redux toolkit setup going
- * You'll need to make your own reducers, with actions as well to facilitate redux-toolkit
- */
+import { SET_QUOTES, DELETE_QUOTE, UPDATE_QUOTE, SET_QUOTE_TO_UPDATE, SET_FORM_DATA } from '../actions/actionstopic';
 
-import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = ''
-
-const testSlice = createSlice({
-  name: 'test',
-  initialState,
-  reducers: {
-    setTest(state, action) {
-      console.log('received action: ', action)
-      console.log('updating state to ...', action.payload)
-      return action.payload
-    }
+const initialState = {
+  quotes: [],
+  quoteToUpdate: null,
+  formData: {
+    quoteText: '',
+    quoteAuthor: '',
+    quoteCategory: ''
   }
-})
+};
 
-export const { setFilter } = testSlice.actions
-export default testSlice.reducer
+const topicsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_QUOTES:
+      return {
+        ...state,
+        quotes: action.payload
+      };
+    case DELETE_QUOTE:
+      return {
+        ...state,
+        quotes: state.quotes.filter(quote =>
+          !(quote.quote === action.payload.quote && quote.author === action.payload.author && quote.category === action.payload.category)
+        )
+      };
+    case UPDATE_QUOTE:
+      return {
+        ...state,
+        quotes: state.quotes.map(quote =>
+          quote.quote === action.payload.quoteToUpdate && quote.author === action.payload.author && quote.category === action.payload.category ?
+          action.payload : quote
+        )
+      };
+    case SET_QUOTE_TO_UPDATE:
+      return {
+        ...state,
+        quoteToUpdate: action.payload
+      };
+    case SET_FORM_DATA:
+      return {
+        ...state,
+        formData: action.payload
+      };
+    default:
+      return state;
+  }
+};
+
+export default topicsReducer;

@@ -1,44 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import quotesData from '../../data/quotesList.json';
-
-const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
+import { setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData } from '../actions/actionstopic'
+const Topics = ({quotes , quoteToUpdate , formData , setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData}) => {
   const { topics } = useParams(); // extracting the topic parameter from the URL (/:topic)
-  const [quotes, setQuotes] = useState([]); // holds the filtered quotes based on the selected topic
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [quoteToUpdate, setQuoteToUpdate] = useState(null); 
-  const [formData, setFormData] = useState({
-    quoteText: '',
-    quoteAuthor: '',
-    quoteCategory: ''
-  });
-
   useEffect(() => {
     try {
-      const filteredQuotes = quotesData.topics.filter(
-        (quote) => quote.category === topics
-      );
-      setQuotes(filteredQuotes);
+      setQuotes(quotesData.topics.filter(quote => quote.category === topics));
       setLoading(false);
     } catch (error) {
       setError(error);
     }
-  }, [topics]);
+  }, [topics, setQuotes]);
 
   const handleDelete = (quoteToDelete) => {
-    const updatedQuotes = quotes.filter(quote =>
-      !(quote.quote === quoteToDelete.quote && quote.author === quoteToDelete.author && quote.category === quoteToDelete.category)
-    );
-    setQuotes(updatedQuotes);
-    console.log('Quote deleted:', quoteToDelete);
-    onDeleteQuote(quoteToDelete);
+    deleteQuote(quoteToDelete);
   };
 
   const handleUpdate = () => {
-    if (quoteText && quoteAuthor && quoteCategory) {
-      const updatedQuote = { ...quoteToUpdate, quote: quoteText, author: quoteAuthor, category: quoteCategory };
-      onUpdateQuote(updatedQuote);
+    if (formData.quoteText && formData.quoteAuthor && formData.quoteCategory) {
+      const updatedQuote = { ...quoteToUpdate, quote: formData.quoteText, author: formData.quoteAuthor, category: formData.quoteCategory };
+      updateQuote(updatedQuote);
       clearInputs();
       console.log('Quote updated:', updatedQuote);
     } else {
@@ -48,16 +33,20 @@ const Topics = ({ onDeleteQuote, onUpdateQuote }) => {
 
   const selectQuoteToUpdate = (quote) => {
     setQuoteToUpdate(quote);
-    setQuoteText(quote.quote);
-    setQuoteAuthor(quote.author);
-    setQuoteCategory(quote.category);
+    setFormData({
+      quoteText: quote.quote,
+      quoteAuthor: quote.author,
+      quoteCategory: quote.category
+    });
   };
 
   const clearInputs = () => {
     setQuoteToUpdate(null);
-    setQuoteText('');
-    setQuoteAuthor('');
-    setQuoteCategory('');
+    setFormData({
+      quoteText: '',
+      quoteAuthor: '',
+      quoteCategory: ''
+    });
   };
 
    // Define a function named handleLoad that takes no parameters
@@ -146,4 +135,11 @@ const handleLoad = () => {
   );
 };
 
-export default Topics;
+const mapStateToProps = (state) => ({
+  quotes: state.quotes, 
+  quoteToUpdate: state.quoteToUpdate,
+  formData: state.formData
+});
+
+
+export default connect(mapStateToProps, { setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData })(Topics);

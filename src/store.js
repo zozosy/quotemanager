@@ -1,8 +1,12 @@
-// store.js
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers'; // Import your combined reducers
+import { configureStore } from '@reduxjs/toolkit';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+import topicsReducer from './reducers/testReducer';
+
+
+const store = configureStore({
+  reducer: {
+    topics: topicsReducer
+  }
+});
 
 export default store;
