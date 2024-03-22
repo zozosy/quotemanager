@@ -1,67 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import quotesData from '../../data/quotesList.json';
-import { setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData } from '../actions/actionstopic'
-const Topics = ({quotes , quoteToUpdate , formData , setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData}) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuotes } from '../reducers/testReducer';
+
+const Topics = () => {
+  const quotesData = useSelector(state => state.test.quotesData);
+  const dispatch = useDispatch();
   const { topics } = useParams(); // extracting the topic parameter from the URL (/:topic)
-  const [loading, setLoading] = useState(false);
+  const [quotes, filterQuotes] = useState([]); // holds the filtered quotes based on the selected topic
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [quoteToUpdate, setQuoteToUpdate] = useState(null); 
+  const [formData, setFormData] = useState({
+    quoteText: '',
+    quoteAuthor: '',
+    quoteCategory: ''
+  });
+
   useEffect(() => {
     try {
-      setQuotes(quotesData.topics.filter(quote => quote.category === topics));
+      const filteredQuotes = quotesData.filter(
+        (quote) => quote.category === topics
+      );
+      filterQuotes(filteredQuotes);
       setLoading(false);
     } catch (error) {
       setError(error);
     }
-  }, [topics, setQuotes]);
+  }, [topics]);
 
   const handleDelete = (quoteToDelete) => {
-    deleteQuote(quoteToDelete);
+    const updatedQuotes = quotes.filter(quote =>
+      !(quote.quote === quoteToDelete.quote && quote.author === quoteToDelete.author && quote.category === quoteToDelete.category)
+    );
+    filterQuotes(updatedQuotes);
+    dispatch(setQuotes({ quotesData: updatedQuotes }));
+    console.log('Quote deleted:', quoteToDelete);
   };
 
-  const handleUpdate = () => {
-    if (formData.quoteText && formData.quoteAuthor && formData.quoteCategory) {
-      const updatedQuote = { ...quoteToUpdate, quote: formData.quoteText, author: formData.quoteAuthor, category: formData.quoteCategory };
-      updateQuote(updatedQuote);
-      clearInputs();
-      console.log('Quote updated:', updatedQuote);
-    } else {
-      alert('Please fill in all fields.');
-    }
+  const handleUpdate = (index, quote, author, category) => {
+    const updatedQuote = { ...quotes };
+    updatedQuote[index].quote = quote;
+    updatedQuote[index].author = author;
+    updatedQuote[index].category = category;
+    filterQuotes(updatedQuote);
+    // implement the logic to update state in store here
+    console.log('Quote updated:', updatedQuotes[index]);
   };
 
   const selectQuoteToUpdate = (quote) => {
     setQuoteToUpdate(quote);
-    setFormData({
-      quoteText: quote.quote,
-      quoteAuthor: quote.author,
-      quoteCategory: quote.category
-    });
+    setQuoteText(quote.quote);
+    setQuoteAuthor(quote.author);
+    setQuoteCategory(quote.category);
   };
 
   const clearInputs = () => {
     setQuoteToUpdate(null);
-    setFormData({
-      quoteText: '',
-      quoteAuthor: '',
-      quoteCategory: ''
-    });
+    setQuoteText('');
+    setQuoteAuthor('');
+    setQuoteCategory('');
   };
 
-   // Define a function named handleLoad that takes no parameters
 const handleLoad = () => {
   try {
-      // Attempt to retrieve data from localStorage under the key 'quotes' and store it in storedQuotes variable
       const storedQuotes = localStorage.getItem('quotes');
-      // Check if there is any data stored in storedQuotes
       if (storedQuotes) {
-          // Parse the stored data from JSON format into a JavaScript object and store it in parsedQuotes variable
           const parsedQuotes = JSON.parse(storedQuotes);
-          // Set the state variable quotes to the parsedQuotes, ensuring it's an array
-          setQuotes(parsedQuotes);
+          filterQuotes(parsedQuotes);
       } else {
-          // Log an error message to the console if no data is found in localStorage
           console.error('No quotes found in localStorage');
       }
   } catch (error) {
@@ -109,37 +116,31 @@ const handleLoad = () => {
         <div>
           <h3>Update Quote</h3>
           <input
-  type="text"
-  value={formData.quoteText}
-  onChange={(e) => setFormData({...formData, quoteText: e.target.value})}
-  placeholder="Enter quote text"
-/>
+            type="text"
+            value={formData.quoteText}
+            onChange={(e) => setFormData({...formData, quoteText: e.target.value})}
+            placeholder="Enter quote text"
+          />
 
-<input
-  type="text"
-  value={formData.quoteAuthor}
-  onChange={(e) => setFormData({...formData, quoteAuthor: e.target.value})}
-  placeholder="Enter author"
-/>
+          <input
+            type="text"
+            value={formData.quoteAuthor}
+            onChange={(e) => setFormData({...formData, quoteAuthor: e.target.value})}
+            placeholder="Enter author"
+          />
 
-<input
-  type="text"
-  value={formData.quoteCategory}
-  onChange={(e) => setFormData({...formData, quoteCategory: e.target.value})}
-  placeholder="Enter category"
-/>
-          <button onClick={handleUpdate}>Update Quote</button>
+          <input
+            type="text"
+            value={formData.quoteCategory}
+            onChange={(e) => setFormData({...formData, quoteCategory: e.target.value})}
+            placeholder="Enter category"
+          />
+
+          <button onClick={handleUpdate(index, formData.quote, formData.author, formData.category)}>Update Quote</button>
         </div>
       )}
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  quotes: state.quotes, 
-  quoteToUpdate: state.quoteToUpdate,
-  formData: state.formData
-});
-
-
-export default connect(mapStateToProps, { setQuotes, deleteQuote, updateQuote, setQuoteToUpdate, setFormData })(Topics);
+export default Topics;

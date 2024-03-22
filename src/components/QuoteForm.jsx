@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react'; // Importing React and useState hook from React library
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setQuotes } from '../reducers/testReducer';
 
-const QuoteForm = ({ addNewQuote }) => { // Defining a functional component named QuoteForm, receiving addNewQuote as prop
-  const [quoteText, setQuoteText] = useState(''); // Declaring state variable quoteText and setter function setQuoteText using useState hook, initializing with an empty string
-  const [quoteAuthor, setQuoteAuthor] = useState(''); // Declaring state variable quoteAuthor and setter function setQuoteAuthor using useState hook, initializing with an empty string
-  const [quoteCategory, setQuoteCategory] = useState(''); // Declaring state variable quoteCategory and setter function setQuoteCategory using useState hook, initializing with an empty string
+const QuoteForm = () => {
+  const quotes = useSelector(state => state.test.quotesData);
+  const dispatch = useDispatch();
+  const [quoteText, setQuoteText] = useState('');
+  const [quoteAuthor, setQuoteAuthor] = useState('');
+  const [quoteCategory, setQuoteCategory] = useState('');
 
  
-  
+  const addNewQuote = (newQuote) => {
+    const updateQuotes = [...quotes, newQuote];
+    dispatch(setQuotes({ quotesData: updateQuotes }));
+    console.log('Quote added:', newQuote);
+    console.log('All Quotes:', quotes);
+  };
 
   // Function to add a new quote
 const handleAddQuote = () => {
@@ -14,18 +23,15 @@ const handleAddQuote = () => {
     const newQuoteData = { quote: quoteText, author: quoteAuthor, category: quoteCategory };
     addNewQuote(newQuoteData);
     clearInputs();
-    console.log('Quote added:', newQuoteData);
   } else {
     alert('Please fill in all fields.');
   }
 };
 
-  
-
-  const clearInputs = () => { // Defining a function to clear input fields
-    setQuoteText(''); // Clearing quoteText
-    setQuoteAuthor(''); // Clearing quoteAuthor
-    setQuoteCategory(''); // Clearing quoteCategory
+  const clearInputs = () => {
+    setQuoteText('');
+    setQuoteAuthor('');
+    setQuoteCategory('');
   };
 
   
@@ -33,19 +39,19 @@ const handleAddQuote = () => {
   return (
     <div className="quote-form"> 
       <h2>Quote Form</h2> 
-      <input // Input field for quote
+      <input
         type="text"
         value={quoteText}
         placeholder="Enter quote"
         onChange={(e) => setQuoteText(e.target.value)}
       />
-      <input // Input field for author
+      <input
         type="text"
         value={quoteAuthor}
         placeholder="Enter author"
         onChange={(e) => setQuoteAuthor(e.target.value)}
       />
-      <input // Input field for category
+      <input
         type="text"
         value={quoteCategory}
         placeholder="Enter category"
@@ -56,4 +62,4 @@ const handleAddQuote = () => {
   );
 };
 
-export default QuoteForm; // Exporting QuoteForm component
+export default QuoteForm;
