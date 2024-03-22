@@ -46,3 +46,4 @@ const QuotesHome = () => {
 }
 
 export default QuotesHome;
+

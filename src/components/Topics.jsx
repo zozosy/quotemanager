@@ -39,42 +39,44 @@ const Topics = () => {
   };
 
   const handleUpdate = (index, quote, author, category) => {
-    const updatedQuote = { ...quotes };
-    updatedQuote[index].quote = quote;
-    updatedQuote[index].author = author;
-    updatedQuote[index].category = category;
-    filterQuotes(updatedQuote);
-    // implement the logic to update state in store here
+    const updatedQuotes = [...quotes]; // Create a copy of quotes array
+    updatedQuotes[index] = { quote, author, category }; // Update the quote at the specified index
+    filterQuotes(updatedQuotes);
+    // Dispatch action to update state in store here if necessary
     console.log('Quote updated:', updatedQuotes[index]);
   };
 
   const selectQuoteToUpdate = (quote) => {
     setQuoteToUpdate(quote);
-    setQuoteText(quote.quote);
-    setQuoteAuthor(quote.author);
-    setQuoteCategory(quote.category);
+    setFormData({
+      quoteText: quote.quote,
+      quoteAuthor: quote.author,
+      quoteCategory: quote.category
+    });
   };
 
   const clearInputs = () => {
     setQuoteToUpdate(null);
-    setQuoteText('');
-    setQuoteAuthor('');
-    setQuoteCategory('');
+    setFormData({
+      quoteText: '',
+      quoteAuthor: '',
+      quoteCategory: ''
+    });
   };
 
-const handleLoad = () => {
-  try {
+  const handleLoad = () => {
+    try {
       const storedQuotes = localStorage.getItem('quotes');
       if (storedQuotes) {
-          const parsedQuotes = JSON.parse(storedQuotes);
-          filterQuotes(parsedQuotes);
+        const parsedQuotes = JSON.parse(storedQuotes);
+        filterQuotes(parsedQuotes);
       } else {
-          console.error('No quotes found in localStorage');
+        console.error('No quotes found in localStorage');
       }
-  } catch (error) {
+    } catch (error) {
       console.error('Error loading quotes from localStorage:', error);
-  }
-};
+    }
+  };
 
   const handleSaveToLocal = () => {
     localStorage.setItem('quotes', JSON.stringify(quotes));
@@ -136,7 +138,7 @@ const handleLoad = () => {
             placeholder="Enter category"
           />
 
-          <button onClick={handleUpdate(index, formData.quote, formData.author, formData.category)}>Update Quote</button>
+<button onClick={() => handleUpdate(quotes.findIndex(quote => quote === quoteToUpdate), formData.quoteText, formData.quoteAuthor, formData.quoteCategory)}>Update Quote</button>
         </div>
       )}
     </div>
