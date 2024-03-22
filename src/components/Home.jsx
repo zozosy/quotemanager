@@ -1,14 +1,15 @@
-const Home = () => {
+import React from 'react';
+
+const WelcomeMessage = () => {
   return (
-    <div>
-          <h3>This is a Basic Setup for Certification Project III</h3>
-          <p>As you can see, we have a basic router setup, with links to separate pages</p>
-          <p>As you can see, we can open separate components in these routes </p>
-          <p>You will need to incorporate router logically into your project option,
-            and how you do it may differ according to which project you use
-          </p>
+    <div className="welcome-message">
+      <h2>Welcome to InspireMe!</h2>
+      <p>Discover inspiration, wisdom, and motivation with InspireMe.</p>
+      <p>Explore a vast collection of quotes on various topics.</p>
+      <p>Find the perfect words to uplift your spirits, inspire your creativity, and brighten your day.</p>
+      <p>Start your journey of self-discovery and empowerment today!</p>
     </div>
-  )
+  );
 }
 
-export default Home
+export default WelcomeMessage;

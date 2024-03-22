@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 const QuotesHome = () => {
   const generateRandomQuote = { 
     quote:"Friendship is born at that moment when one person says to another, 'What! You too? I thought I was the only one.",
