@@ -1,50 +1,63 @@
-import { SET_QUOTES, DELETE_QUOTE, UPDATE_QUOTE, SET_QUOTE_TO_UPDATE, SET_FORM_DATA } from '../actions/actionstopic';
+/**
+ * Below is an example of a simple reducer, just added it to get the redux toolkit setup going
+ * You'll need to make your own reducers, with actions as well to facilitate redux-toolkit
+ */
+
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  quotes: [],
-  quoteToUpdate: null,
-  formData: {
-    quoteText: '',
-    quoteAuthor: '',
-    quoteCategory: ''
-  }
-};
+    quotesData: [{
+            "quote": "The only true wisdom is in knowing you know nothing.",
+            "author": "Socrates",
+            "category": "wisdom"
+        },
+        {
+            "quote": "With the new day comes new strength and new thoughts.",
+            "author": "Eleanor Roosevelt",
+            "category": "empowerment"
+        },
+        {
+            "quote": "The best thing to hold onto in life is each other.",
+            "author": "Audrey Hepburn",
+            "category": "romance"
+        },
+        {
+            "quote": "The language of friendship is not words but meanings.",
+            "author": "Henry David Thoreau",
+            "category": "companionship"
+        },
+        {
+            "quote": "The secret to humor is surprise.",
+            "author": "Aristotle",
+            "category": "humor"
+        },
+        {
+            "quote": "The only way to find true happiness is to risk being completely cut open.",
+            "author": "Chuck Palahniuk",
+            "category": "spiritual"
+        },
+        {
+            "quote": "One language sets you in a corridor for life. Two languages open every door along the way.",
+            "author": "Frank Smith",
+            "category": "multilingual"
+        },
+        {
+            "quote": "Life is what happens when you're busy making other plans.",
+            "author": "John Lennon",
+            "category": "miscellaneous"
+        }
+    ],
+}
 
-const topicsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_QUOTES:
-      return {
-        ...state,
-        quotes: action.payload
-      };
-    case DELETE_QUOTE:
-      return {
-        ...state,
-        quotes: state.quotes.filter(quote =>
-          !(quote.quote === action.payload.quote && quote.author === action.payload.author && quote.category === action.payload.category)
-        )
-      };
-    case UPDATE_QUOTE:
-      return {
-        ...state,
-        quotes: state.quotes.map(quote =>
-          quote.quote === action.payload.quoteToUpdate && quote.author === action.payload.author && quote.category === action.payload.category ?
-          action.payload : quote
-        )
-      };
-    case SET_QUOTE_TO_UPDATE:
-      return {
-        ...state,
-        quoteToUpdate: action.payload
-      };
-    case SET_FORM_DATA:
-      return {
-        ...state,
-        formData: action.payload
-      };
-    default:
-      return state;
-  }
-};
+const testSlice = createSlice({
+    name: 'test',
+    initialState,
+    reducers: {
+        setQuotes(state, action) {
+            state.quotesData = action.payload.quotesData;
+        }
+    }
+})
 
-export default topicsReducer;
+export const { setQuotes } = testSlice.actions
+export default testSlice.reducer

@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Home from './components/Home';
 import About from './components/About';
 import Header from './components/Header';
@@ -15,20 +10,6 @@ import './App.css';
 import Topics from './components/Topics';
 
 const App = () => {
-  const [quotes, setQuotes] = useState([]); 
-
-  const addNewQuote = (newQuote) => {
-    setQuotes([...quotes, newQuote]);
-    console.log('Quote added:', newQuote);
-  };
-
-  const onDeleteQuote = (quoteToDelete) => {
-    console.log('Deleting quote:' , quoteToDelete);
-  };
-
-  const onUpdateQuote =(quoteToUpdate) => {
-    console.log('Updated Quote:', quoteToUpdate);
-  };
   
   return (
     <Router>
@@ -53,14 +34,9 @@ const App = () => {
 
         <Routes>
           <Route path="/home" element={<QuotesHomepage/>} />
-          <Route path="/quote-form" element={<QuoteForm 
-                                                  addNewQuote={addNewQuote} 
-                                                />} />
+          <Route path="/quote-form" element={<QuoteForm />} />
           <Route path="/about" element={<About />} />
-          <Route  path="/topics/:topics" 
-                 element={<Topics onDeleteQuote={onDeleteQuote} onUpdateQuote={onUpdateQuote} />} 
-/>
-
+          <Route  path="/topics/:topics" element={<Topics />} />
         </Routes>
      {/* <Footer/> */}
       </div>
