@@ -1,28 +1,20 @@
-// Footer.jsx
 import React from 'react';
 
 const Footer = () => {
   return (
     <footer>
       <div className="footer-content">
-        <div className="footer-contact">
-          <h4>Contact Us</h4>
-          <p>
-            <strong>Email:</strong> <a href="mailto:info@example.com">zoubaida.taher17@gmail.com</a>
-          </p>
-          <p>
-            <strong>Phone:</strong> <a href="tel:+1234567890">+1 (431) 276-2883</a>
-          </p>
-        </div>
-        <div className="footer-info">
-          <h4>Additional Info</h4>
-          <p>
-          Welcome to Zoubaida’s Quotes for Managers! Thank you for visiting. Follow us on social media for updates and inspiration.
-
-          </p>
-        </div>
+        <nav>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            {/* Add more navigation links as needed */}
+          </ul>
+        </nav>
+       
       </div>
-      <p>&copy; Art Galary. All rights reserved.</p>
+      <p>&copy; Art Gallery. All rights reserved.</p>
+      <p><a href="/privacy-policy">Privacy Policy</a></p>
     </footer>
   );
 };

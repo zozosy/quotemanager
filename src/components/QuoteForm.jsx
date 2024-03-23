@@ -33,10 +33,11 @@ const handleAddQuote = () => {
     setQuoteAuthor('');
     setQuoteCategory('');
   };
-
+ 
   
 
   return (
+    
     <div className="quote-form"> 
       <h2>Quote Form</h2> 
       <input
@@ -58,6 +59,7 @@ const handleAddQuote = () => {
         onChange={(e) => setQuoteCategory(e.target.value)}
       />
       <button onClick={handleAddQuote}>Add Quote</button> 
+      
     </div>
   );
 };

@@ -368,3 +368,19 @@ nav ul li a:hover {
 .navbar a:hover {
   color: #ff1493; /* Hot pink */
 }
+
+/* home Navgation  */
+.home {
+  background-color: #007bff; /* Blue color, you can change it to fit your design */
+  color: #fff; /* Text color */
+  padding: 10px 20px; /* Padding around the text */
+  border: none; /* Remove default button border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.home:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}
