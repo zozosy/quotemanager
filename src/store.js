@@ -1,12 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'; // Importing configureStore function from Redux Toolkit
+import topicsReducer from './reducers/testReducer'; // Importing topicsReducer
 
-import topicsReducer from './reducers/testReducer';
-
-
-const store = configureStore({
+const store = configureStore({ // Creating Redux store
   reducer: {
-    topics: topicsReducer
+    topics: topicsReducer // Adding topicsReducer to the store
   }
 });
 
-export default store;
+export default store; // Exporting the Redux store

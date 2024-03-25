@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; //Importing Link component from react-router-dom
 
 
 const QuotesHome = () => {
   const generateRandomQuote = { 
     quote:"Friendship is born at that moment when one person says to another, 'What! You too? I thought I was the only one.",
     author: "C.S. Lewis"
-  };
+  };//Generating a random quote object
 
   return (
     <div>
       <h3>Daily Inspiration</h3>
       <div>
-        <blockquote>{generateRandomQuote.quote}</blockquote>
+        <blockquote>{generateRandomQuote.quote}</blockquote>  
         <p>- {generateRandomQuote.author}</p>
       </div>
       <h3>DiscovUncover Subjects</h3>

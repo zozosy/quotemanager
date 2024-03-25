@@ -12,35 +12,36 @@ import Topics from './components/Topics';
 const App = () => {
   
   return (
-    <Router>
+    <Router> 
       <div>
-        <Header/>
-        <nav>
+        <Header/> 
+        <nav> 
           <ul>
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="/home">Home</Link> 
             </li>
             <li>
-              <Link to="/quote-form">Quote Form</Link>
+              <Link to="/quote-form">Quote Form</Link> 
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about">About</Link> 
             </li>
           </ul>
         </nav>
         <main>
-          <Home/>
+          <Home/> 
         </main>
 
-        <Routes>
-          <Route path="/home" element={<QuotesHomepage/>} />
-          <Route path="/quote-form" element={<QuoteForm />} />
-          <Route path="/about" element={<About />} />
-          <Route  path="/topics/:topics" element={<Topics />} />
+        <Routes> {/* Nested routes */}
+          <Route path="/home" element={<QuotesHomepage/>} /> {/* Route to the QuotesHomepage component */}
+          <Route path="/quote-form" element={<QuoteForm />} /> 
+          <Route path="/about" element={<About />} /> 
+          <Route  path="/topics/:topics" element={<Topics />} /> {/* Route with parameter to the Topics component */}
         </Routes>
-     <Footer/>
+        <Footer/> 
       </div>
     </Router>
   );
 }
-export default App
+
+export default App; 

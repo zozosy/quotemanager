@@ -3,15 +3,15 @@
  * You'll need to make your own reducers, with actions as well to facilitate redux-toolkit
  */
 
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'; // Importing createSlice function from Redux Toolkit
 
 const initialState = {
-    quotesData:  [
+    quotesData:  [ // Initial state for quotesData
         {
           "quote": "The only true wisdom is in knowing you know nothing.",
           "author": "Socrates",
           "category": "wisdom"
-        },
+        }, // Initial quote object
         {
           "quote": "Wisdom begins in wonder.",
           "author": "Socrates",
@@ -131,15 +131,15 @@ const initialState = {
     }
     
 
-const testSlice = createSlice({
-    name: 'test',
-    initialState,
-    reducers: {
-        setQuotes(state, action) {
-            state.quotesData = action.payload.quotesData;
+    const testSlice = createSlice({ // Creating a slice of state using createSlice
+        name: 'test', // Slice name
+        initialState, // Initial state
+        reducers: {
+            setQuotes(state, action) { // Reducer function to set quotes data
+                state.quotesData = action.payload.quotesData; // Updating quotesData with the payload data
+            }
         }
-    }
-})
-
-export const { setQuotes } = testSlice.actions
-export default testSlice.reducer
+    });
+    
+    export const { setQuotes } = testSlice.actions; // Exporting action creators
+    export default testSlice.reducer; // Exporting the reducer function

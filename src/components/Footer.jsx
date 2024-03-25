@@ -13,7 +13,7 @@ const Footer = () => {
         </nav>
        
       </div>
-      <p>&copy; Art Gallery. All rights reserved.</p>
+      <p>&copy; Zoubaida's Gallery. All rights reserved.</p>
       <p><a href="/privacy-policy">Privacy Policy</a></p>
     </footer>
   );
